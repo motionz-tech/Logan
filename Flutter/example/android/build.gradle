@@ -1,0 +1,46 @@
+buildscript {
+    ext.kotlin_version = '1.6.10'
+    repositories {
+        google()
+        maven {
+                url "http://182.254.226.81:8081/repository/flowz/"
+                allowInsecureProtocol true
+                credentials {
+                    username = "jenkins"
+                    password = "yygame"
+                }
+        }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        maven {
+                url "http://182.254.226.81:8081/repository/flowz/"
+                allowInsecureProtocol true
+                credentials {
+                    username = "jenkins"
+                    password = "yygame"
+                }
+        }
+        mavenCentral()
+    }
+}
+
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
